@@ -2,8 +2,25 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
 import Stack from 'react-bootstrap/Stack';
+import { Router, Routes, Route} from 'react-router-dom';
+import {useEffect, useState } from 'react';
 
-function Containers(){
+const Containers = ()=>{
+    
+    const empdata = [
+        {
+            id:1,
+            name:'eduardo'
+        }
+
+    ]
+
+    const[data,setData] = useState(0);
+
+    useEffect(()=>{
+        setData(empdata);
+    },[])
+    
     return(
         <div>
             <Stack direction='horizontal' gap={3}>
@@ -21,26 +38,30 @@ function Containers(){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <td>3</td>
-                    <td colSpan={2}>Larry the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
+                    {
+                        data && data.length> 0 ?
+                        data.map((item,index)=>{
+                            return(
+                                <tr key={index}>
+                                    <td>{item.id}</td>
+                                    <td>{item.name}</td>
+                                    <td colSpan={2}>
+                                        <button className='btn btn-success'>Editar</button> &nbsp;
+                                        <button className='btn btn-danger'>Deletar</button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                        :
+                        'Loading...'
+                    }
+                    
+                
                 </tbody>
             </Table>
         </div>
+        
+ 
     );
 }
 
